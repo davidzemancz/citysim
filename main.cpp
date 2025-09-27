@@ -10,6 +10,7 @@ const int MAP_HEIGHT = 20;
 enum MapPointType {
     EMPTY,
     ROAD,
+    INTERSECTION
 };
 
 enum Direction {
@@ -18,7 +19,6 @@ enum Direction {
     EAST,
     SOUTH,
     WEST,
-    INTERSECTION
 };
 
 class MapPoint{
@@ -71,14 +71,16 @@ void createRoads(vector<vector<MapPoint>>& map) {
     // Create a vertical road in the middle of the map
     for (int y = 0; y < MAP_HEIGHT; y++) {
         if (map[MAP_WIDTH / 2][y].type == ROAD) {
-             map[MAP_WIDTH / 2][y].direction = INTERSECTION;
+            map[MAP_WIDTH / 2][y].type = INTERSECTION;
+            map[MAP_WIDTH / 2][y].direction = NONE;
         } else{
             map[MAP_WIDTH / 2][y].type = ROAD;
             map[MAP_WIDTH / 2][y].direction = NORTH;
         }
 
         if (map[MAP_WIDTH / 2 + 1][y].type == ROAD) {
-             map[MAP_WIDTH / 2 + 1][y].direction = INTERSECTION;
+            map[MAP_WIDTH / 2 + 1][y].type = INTERSECTION;
+             map[MAP_WIDTH / 2 + 1][y].direction = NONE;
         } else{
             map[MAP_WIDTH / 2 + 1][y].type = ROAD;
             map[MAP_WIDTH / 2 + 1][y].direction = SOUTH;
@@ -99,10 +101,10 @@ void printMap(const vector<vector<MapPoint>>& map) {
                     symbol = "↓"; // Vertical road
                 } else if (map[x][y].direction == WEST) {
                     symbol = "←"; // Horizontal road
-                } else if (map[x][y].direction == INTERSECTION) {
+                } 
+            } else if (map[x][y].type == INTERSECTION) {
                     symbol = "┼"; // Intersection
                 }
-            }
             cout << symbol;
         }
         cout << endl;
